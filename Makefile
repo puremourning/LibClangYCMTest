@@ -11,8 +11,21 @@ CXXFLAGS += -x c++ -std=c++11 -Wall -Wextra -Werror -I${PATH_TO_LLVM_ROOT}/inclu
 LDFLAGS += -L${PATH_TO_LLVM_ROOT}/lib
 LDLIBS += -lclang
 
+define EXTRA_CONF_FILE
+def FlagsForFile( filename, **kwargs ):
+  return {
+    'flags': '$(CXXFLAGS)'.split( ' ' )
+  }
+endef
+
+all: .ycm_extra_conf.py ${TARGET} 
+
 ${TARGET}: ${OBJECTS}
 	${CXX} ${LDFLAGS} $< ${LOADLIBES} ${LDLIBS} -o ${TARGET}
+
+export EXTRA_CONF_FILE
+.ycm_extra_conf.py: Makefile
+	echo "$$EXTRA_CONF_FILE" > $@
 
 
 clean:
