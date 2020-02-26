@@ -1,6 +1,5 @@
 #include <clang-c/Index.h>
 #include <iostream>
-#include <strstream>
 #include <map>
 
 namespace {
